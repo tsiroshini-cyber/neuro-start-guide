@@ -145,15 +145,20 @@ const BRAIN_IMG_SRC = "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCg
 
 const REGIONS = {
   frontal:  { name:"Frontal lobe", color:"#1565c0",
-    fn:"Planning, decision-making, self-control, speech production and voluntary movement. It's the 'manager' of the brain — and its memory-working area (prefrontal cortex) is what you use when solving problems or holding information in mind." },
+    fn:"Planning, decision-making, self-control, speech production and voluntary movement. It's the 'manager' of the brain — and its memory-working area (prefrontal cortex) is what you use when solving problems or holding information in mind.",
+    dis:["Stroke here can change personality and judgement","Frontotemporal dementia affects behaviour and language","Linked to depression, ADHD and impulse-control difficulties"] },
   parietal: { name:"Parietal lobe", color:"#d81b9c",
-    fn:"Touch, pressure, temperature and body position (proprioception). It also helps with attention and combining senses — for example, reading a map or reaching for a cup without looking." },
+    fn:"Touch, pressure, temperature and body position (proprioception). It also helps with attention and combining senses — for example, reading a map or reaching for a cup without looking.",
+    dis:["Stroke can cause 'neglect' — ignoring one side of the body or space","Loss of touch or position sensing (somatosensory deficits)","Difficulty with number, writing and left–right awareness after injury"] },
   occipital:{ name:"Occipital lobe", color:"#22b14c",
-    fn:"Vision. It processes shapes, colours, movement and words you read — everything you 'see' is assembled here before other areas give it meaning." },
+    fn:"Vision. It processes shapes, colours, movement and words you read — everything you 'see' is assembled here before other areas give it meaning.",
+    dis:["Cortical blindness — eyes are healthy but the brain cannot see","Visual agnosia — seeing objects without recognising them","Bright auras in migraine arise from occipital cortex activity"] },
   temporal: { name:"Temporal lobe", color:"#e02020",
-    fn:"Hearing, language understanding and memory. It works closely with the hippocampus to store new memories, which is why damage here can affect both hearing-speech and recall." },
+    fn:"Hearing, language understanding and memory. It works closely with the hippocampus to store new memories, which is why damage here can affect both hearing-speech and recall.",
+    dis:["Temporal lobe epilepsy — the most common focal epilepsy in adults","Early memory loss in Alzheimer's disease begins around the temporal lobe","Damage to language areas here causes receptive (Wernicke) aphasia"] },
   brainstem:{ name:"Brainstem", color:"#e8a3b4",
-    fn:"Life support: breathing, heart rate, blood pressure, swallowing and sleep–wake cycles. Signals between the brain and body also pass through here." }
+    fn:"Life support: breathing, heart rate, blood pressure, swallowing and sleep–wake cycles. Signals between the brain and body also pass through here.",
+    dis:["Even small strokes here can be life-threatening (e.g. locked-in syndrome)","Central sleep apnoea — the brain's breathing signal is disrupted","Damage can affect swallowing, eye movement and consciousness"] }
 };
 
 function initBrainDiagram(){
@@ -171,7 +176,10 @@ function initBrainDiagram(){
       b.classList.toggle("active", b.dataset.region === key));
     const r = REGIONS[key];
     showDetail("brain-detail",
-      `<h4 style="color:${r.color}">${r.name}</h4><p>${r.fn}</p>`);
+      `<h4 style="color:${r.color}">${r.name}</h4>
+       <p>${r.fn}</p>
+       <h4 style="margin-top:12px">Related diseases &amp; conditions</h4>
+       <ul>${r.dis.map(d=>`<li>${d}</li>`).join("")}</ul>`);
     // keep the matching learning card in sync if one exists
     document.querySelectorAll("#brain-cards .card").forEach(c=>
       c.classList.toggle("active", c.querySelector("h3").textContent === r.name));
@@ -196,17 +204,23 @@ function initBrainDiagram(){
 // ---------- Sample data (made up for learning; Malaysia-specific examples) ----------
 const BRAIN = [
   {name:"Cerebral cortex", short:"Thinking, planning and memory hub",
-   long:"The cortex is the wrinkled outer layer of the brain. Its frontal lobes handle planning and self-control, temporal lobes handle hearing and memory, parietal lobes handle touch and body awareness, and occipital lobes handle vision."},
+   long:"The cortex is the wrinkled outer layer of the brain. Its frontal lobes handle planning and self-control, temporal lobes handle hearing and memory, parietal lobes handle touch and body awareness, and occipital lobes handle vision.",
+   dis:["Frontotemporal dementia","Stroke-related personality and language changes","Cortical blindness (occipital damage)"]},
   {name:"Hippocampus", short:"Turns short-term experiences into long-term memories",
-   long:"A small seahorse-shaped structure deep in the temporal lobe. It helps convert new experiences into stored memories and supports spatial navigation — for example, remembering a route across KL without a map."},
+   long:"A small seahorse-shaped structure deep in the temporal lobe. It helps convert new experiences into stored memories and supports spatial navigation — for example, remembering a route across KL without a map.",
+   dis:["Alzheimer's disease — early memory loss starts here","Hippocampal sclerosis in temporal lobe epilepsy","Effects of chronic stress and high cortisol on memory"]},
   {name:"Basal ganglia", short:"Controls smooth, voluntary movement",
-   long:"A group of nuclei that help start and smooth out voluntary movements and support habit learning. When dopamine signalling here is disrupted, movement can become difficult to initiate or control."},
+   long:"A group of nuclei that help start and smooth out voluntary movements and support habit learning. When dopamine signalling here is disrupted, movement can become difficult to initiate or control.",
+   dis:["Parkinson's disease — dopamine neurons in this circuit degenerate","Huntington's disease — causes jerky movements and mood changes","Dystonia and tremor disorders"]},
   {name:"Hypothalamus", short:"Keeps the body's internal balance (homeostasis)",
-   long:"A tiny region that regulates hunger, thirst, body temperature, sleep rhythms and hormone release through its link to the pituitary gland — the main messenger between brain and endocrine system."},
+   long:"A tiny region that regulates hunger, thirst, body temperature, sleep rhythms and hormone release through its link to the pituitary gland — the main messenger between brain and endocrine system.",
+   dis:["Hypothalamic tumours causing hormone and appetite problems","Narcolepsy — loss of orexin neurons nearby disrupts sleep–wake control","Central diabetes insipidus from pituitary signalling failure"]},
   {name:"Cerebellum", short:"Coordinates balance and fine movement",
-   long:"The 'little brain' at the back of the skull. It fine-tunes movement, keeps posture and balance steady, and may also support timing and language processing."},
+   long:"The 'little brain' at the back of the skull. It fine-tunes movement, keeps posture and balance steady, and may also support timing and language processing.",
+   dis:["Cerebellar ataxia — unsteady, uncoordinated movement","Alcohol-related cerebellar degeneration","Medulloblastoma, a tumour more common in children"]},
   {name:"Brainstem", short:"Runs the automatic life-support functions",
-   long:"Connects the brain to the spinal cord and controls breathing, heart rate, swallowing and wakefulness without any conscious effort."}
+   long:"Connects the brain to the spinal cord and controls breathing, heart rate, swallowing and wakefulness without any conscious effort.",
+   dis:["Brainstem stroke — small lesions can be life-threatening","Central sleep apnoea","Locked-in syndrome after pontine damage"]}
 ];
 
 const PHYSIO = [
@@ -298,7 +312,8 @@ function renderCards(containerId, items, detailId, activeStyle){
     b.addEventListener("click",()=>{
       c.querySelectorAll(".card").forEach(x=>x.classList.remove("active"));
       b.classList.add("active");
-      showDetail(detailId, `<h4>${it.name}</h4><p>${it.long}</p>`);
+      const dis = it.dis ? `<h4 style="margin-top:12px">Related diseases &amp; conditions</h4><ul>${it.dis.map(d=>`<li>${d}</li>`).join("")}</ul>` : "";
+      showDetail(detailId, `<h4>${it.name}</h4><p>${it.long}</p>${dis}`);
     });
     c.appendChild(b);
   });
